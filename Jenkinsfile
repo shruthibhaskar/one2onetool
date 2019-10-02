@@ -4,7 +4,7 @@ pipeline {
     registry = "104466/molregistry"
     registryCredential = 'dockerhubcreds'
     dockerImage = ''
-    envDataFile = 'Questions.json'
+    envDataFile = ''
   }
   agent any
   tools {nodejs "node" }
@@ -80,18 +80,14 @@ pipeline {
         }
       }
     }
-
   }
  post {
     success {
-      emailext(
-		    to: 'sbhaskar@gmail.com.com',
-		    mimeType: 'html',
-        subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-        body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-        <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
-		    replyTo: 'moljenkinsalert@gmail.com'    
-      )
+      emailext (
+          subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+          body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+            <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
+        )
     }
     failure {
       emailext (
