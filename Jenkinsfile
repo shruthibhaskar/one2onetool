@@ -68,7 +68,7 @@ pipeline {
 
           sh "docker stop mol-one2one"
           sh "docker rm mol-one2one"
-          
+          sh "date"
           sh "docker rmi ${dockerImage}"
         }
       }
