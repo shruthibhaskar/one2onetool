@@ -21,14 +21,14 @@ pipeline {
           echo "Branch name : ${env.BRANCH_NAME}"
           echo "scmValue GIT_BRANCH : ${scmValues.GIT_BRANCH}"
     
-	  if ( scmValues.GIT_BRANCH.contains('master')){
-	    echo "branch master-production"
-	    envDataFile = 'Questions.json'
-          echo "envDataFile : ${envDataFile}"
-	  } else {
-	    echo "branch staging"
-	    envDataFile = 'Questions-test.json'
-          echo "envDataFile : ${envDataFile}"
+          if ( scmValues.GIT_BRANCH.contains('master')){
+            echo "branch master-production"
+            envDataFile = 'Questions.json'
+              echo "envDataFile : ${envDataFile}"
+          } else {
+            echo "branch staging"
+            envDataFile = 'Questions-test.json'
+            echo "envDataFile : ${envDataFile}"
           }
         }
       }
@@ -83,18 +83,12 @@ pipeline {
   }
  post {
     success {
-      emailext (
-          subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-          body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-            <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
-        )
+      emailext body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+      <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""", recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
     }
     failure {
-      emailext (
-          subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-          body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-            <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
-        )
+      emailext body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+      <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""", recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
     }
   }
 }
