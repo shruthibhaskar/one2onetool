@@ -22,7 +22,7 @@ pipeline {
           echo "Branch name : ${env.BRANCH_NAME}"
           echo "scmValue GIT_BRANCH : ${scmValues.GIT_BRANCH}"
     
-          if ( scmValues.GIT_BRANCH.contains('master')){
+          if ( env.BRANCH_NAME.contains('master')){
             echo "branch master-production"
             envDataFile = 'Questions.json'
               echo "envDataFile : ${envDataFile}"
