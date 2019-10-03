@@ -84,7 +84,7 @@ pipeline {
     stage('Health Check') {
       steps{
          script {
-           sh "sleep 5"
+           sh "sleep 4"
            sh "curl -I ${appURL}"
         }
       }
