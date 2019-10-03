@@ -89,7 +89,7 @@ pipeline {
         }
       }
     }
-  }
+  } 
  post {
     success {
       emailext body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
