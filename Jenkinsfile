@@ -18,18 +18,14 @@ pipeline {
     stage('Branch check') {
       steps {
         script {
-          def scmValues = checkout scm
           echo "Branch name : ${env.BRANCH_NAME}"
-          echo "scmValue GIT_BRANCH : ${scmValues.GIT_BRANCH}"
     
           if ( env.BRANCH_NAME.contains('master')){
             echo "branch master-production"
             envDataFile = 'Questions.json'
-              echo "envDataFile : ${envDataFile}"
           } else {
             echo "branch staging"
             envDataFile = 'Questions-test.json'
-            echo "envDataFile : ${envDataFile}"
           }
         }
       }
