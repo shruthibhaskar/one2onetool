@@ -74,7 +74,6 @@ pipeline {
       steps{
          script {
            sh "docker run -dit --name mol-one2one -p 3000:3000 --env DATA_FILE='$envDataFile' '$registry:$BUILD_NUMBER'"
-           sh "docker stop mol-one2one"
         }
       }
     }
