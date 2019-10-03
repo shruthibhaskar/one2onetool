@@ -5,6 +5,7 @@ pipeline {
     registryCredential = 'dockerhubcreds'
     dockerImage = ''
     envDataFile = ''
+    appURL = 'http://15.206.36.39:3000'
   }
   agent any
   tools {nodejs "node" }
@@ -77,6 +78,13 @@ pipeline {
       steps{
          script {
            sh "docker run -dit --name mol-one2one -p 3000:3000 --env DATA_FILE='$envDataFile' '$registry:$BUILD_NUMBER'"
+        }
+      }
+    }
+    stage('Health Check') {
+      steps{
+         script {
+           sh "curl -I ${appURL}"
         }
       }
     }
