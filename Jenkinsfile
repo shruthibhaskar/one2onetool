@@ -69,7 +69,7 @@ pipeline {
 
           sh "docker stop mol-one2one"
           sh "docker rm mol-one2one"
-          
+
           sh "docker rmi ${dockerImage}"
         }
       }
@@ -84,6 +84,7 @@ pipeline {
     stage('Health Check') {
       steps{
          script {
+           sh "sleep 5"
            sh "curl -I ${appURL}"
         }
       }
