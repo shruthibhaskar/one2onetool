@@ -71,7 +71,7 @@ pipeline {
           sh "docker rm mol-one2one"
 
           sh "docker rmi ${dockerImage}"
-          sh "docker images prune"
+          sh "yes | docker image prune"
         }
       }
     }
